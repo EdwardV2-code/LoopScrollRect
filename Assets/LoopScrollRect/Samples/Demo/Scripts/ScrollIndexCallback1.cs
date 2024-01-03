@@ -6,8 +6,6 @@ public class ScrollIndexCallback1 : MonoBehaviour, LoopCell
 {
     public Image image;
 	public Text text;
-
-    // http://stackoverflow.com/questions/2288498/how-do-i-get-a-rainbow-color-gradient-in-c
     public static Color Rainbow(float progress)
     {
         progress = Mathf.Clamp01(progress);

@@ -394,6 +394,11 @@ namespace UnityEngine.UI
         public bool inertia { get { return m_Inertia; } set { m_Inertia = value; } }
 
         [SerializeField]
+        private bool m_dragable = true;
+        //should scroll view be draggable
+        public bool dragable { get { return m_dragable; } set { m_dragable = value; } }
+
+        [SerializeField]
         private float m_DecelerationRate = 0.135f; // Only used when inertia is enabled
 
         /// <summary>
@@ -752,6 +757,16 @@ namespace UnityEngine.UI
             return itemTypeEnd - idx - 1;
         }
         
+        public void ScrollToNext(float speed)
+        {
+            ScrollToCell(GetFirstItem(out float offset) + contentConstraintCount, speed);
+        }
+
+        public void ScrollToPrev(float speed)
+        {
+            ScrollToCell(GetFirstItem(out float offset) - contentConstraintCount, speed);
+        }
+
         public void ScrollToCell(int index, float speed)
         {
             if (totalCount >= 0 && (index < 0 || index >= totalCount))
@@ -1404,6 +1419,9 @@ namespace UnityEngine.UI
             if (!IsActive())
                 return;
 
+            if (!m_dragable)
+                return;
+
             UpdateBounds();
 
             m_PointerStartLocalCursor = Vector2.zero;
@@ -1435,6 +1453,9 @@ namespace UnityEngine.UI
         public virtual void OnEndDrag(PointerEventData eventData)
         {
             if (eventData.button != PointerEventData.InputButton.Left)
+                return;
+
+            if (!m_dragable)
                 return;
 
             m_Dragging = false;
@@ -1473,6 +1494,9 @@ namespace UnityEngine.UI
                 return;
 
             if (!IsActive())
+                return;
+
+            if (!m_dragable)
                 return;
 
             Vector2 localCursor;
