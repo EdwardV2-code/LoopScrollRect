@@ -1,12 +1,12 @@
-﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
-
-namespace Demo
+using UnityEngine;
+using UnityEngine.EventSystems;
+namespace UnityEngine.UI
 {
     [RequireComponent(typeof(UnityEngine.UI.LoopScrollRect))]
     [DisallowMultipleComponent]
-    public class InitOnStart : MonoBehaviour, LoopScrollPrefabSource, LoopScrollDataSource
+    public class LoopScrollInitConfig : MonoBehaviour, LoopScrollPrefabSource, LoopScrollDataSource
     {
         public GameObject item;
         public int totalCount = -1;
@@ -35,7 +35,7 @@ namespace Demo
 
         public void ProvideData(Transform transform, int idx)
         {
-            transform.SendMessage("ScrollCellIndex", idx);
+            ExecuteEvents.Execute<LoopCell>(transform.gameObject, null, (x, y) => x.ScrollCellIndex(idx));
         }
 
         void Start()
@@ -48,3 +48,4 @@ namespace Demo
         }
     }
 }
+

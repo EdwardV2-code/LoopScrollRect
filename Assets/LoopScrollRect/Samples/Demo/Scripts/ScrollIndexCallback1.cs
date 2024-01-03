@@ -2,24 +2,10 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class ScrollIndexCallback1 : MonoBehaviour 
+public class ScrollIndexCallback1 : MonoBehaviour, LoopCell
 {
     public Image image;
 	public Text text;
-
-    void ScrollCellIndex (int idx) 
-    {
-		string name = "Cell " + idx.ToString ();
-		if (text != null) 
-        {
-			text.text = name;
-		}
-        if (image != null)
-        {
-            image.color = Rainbow(idx / 50.0f);
-        }
-		gameObject.name = name;
-	}
 
     // http://stackoverflow.com/questions/2288498/how-do-i-get-a-rainbow-color-gradient-in-c
     public static Color Rainbow(float progress)
@@ -66,5 +52,19 @@ public class ScrollIndexCallback1 : MonoBehaviour
                 break;
         }
         return new Color(r, g, b);
+    }
+
+    public void ScrollCellIndex(int idx)
+    {
+        string name = "Cell " + idx.ToString();
+        if (text != null)
+        {
+            text.text = name;
+        }
+        if (image != null)
+        {
+            image.color = Rainbow(idx / 50.0f);
+        }
+        gameObject.name = name;
     }
 }

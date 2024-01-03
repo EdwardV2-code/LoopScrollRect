@@ -631,6 +631,15 @@ namespace UnityEngine.UI
         /// The velocity is defined in units per second.
         /// </remarks>
         public Vector2 velocity { get { return m_Velocity; } set { m_Velocity = value; } }
+        [Serializable]
+        public class EventList
+        {
+            public UnityEvent onBeginDrag;
+            public UnityEvent onDrag;
+            public UnityEvent onEndDrag;
+            public UnityEvent onMoveStop;
+        }
+        public EventList eventList;
 
         private bool m_Dragging;
         private bool m_Scrolling;
@@ -1321,6 +1330,7 @@ namespace UnityEngine.UI
         public virtual void StopMovement()
         {
             m_Velocity = Vector2.zero;
+            eventList.onMoveStop?.Invoke();
         }
 
         public virtual void OnScroll(PointerEventData data)
@@ -1400,6 +1410,7 @@ namespace UnityEngine.UI
             RectTransformUtility.ScreenPointToLocalPointInRectangle(viewRect, eventData.position, eventData.pressEventCamera, out m_PointerStartLocalCursor);
             m_ContentStartPosition = m_Content.anchoredPosition;
             m_Dragging = true;
+            eventList.onBeginDrag?.Invoke();
         }
 
         /// <summary>
@@ -1427,6 +1438,11 @@ namespace UnityEngine.UI
                 return;
 
             m_Dragging = false;
+            eventList.onDrag?.Invoke();
+            if (!m_Inertia)
+            {
+                eventList.onMoveStop?.Invoke();
+            }
         }
 
         /// <summary>
@@ -1480,6 +1496,7 @@ namespace UnityEngine.UI
             }
 
             SetContentAnchoredPosition(position);
+            eventList.onDrag?.Invoke();
         }
 
         /// <summary>
@@ -1534,6 +1551,10 @@ namespace UnityEngine.UI
                         if (Mathf.Abs(m_Velocity[axis]) < 1)
                             m_Velocity[axis] = 0;
                         position[axis] += m_Velocity[axis] * deltaTime;
+                        if(m_Velocity == Vector2.zero)
+                        {
+                            eventList.onMoveStop?.Invoke();
+                        }
                     }
                     // If we have neither elaticity or friction, there shouldn't be any velocity.
                     else
