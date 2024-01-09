@@ -645,6 +645,19 @@ namespace UnityEngine.UI
             public UnityEvent onMoveStop;
         }
         public EventList eventList;
+        [Serializable]
+        public class ScrollLock
+        {
+            public enum Time
+            {
+                EndDrag,MoveStop
+            }
+            public bool enable;
+            public int cellOffset = 0;
+            public float speed;
+            public Time time;
+        }
+        public ScrollLock scrollLock;
 
         private bool m_Dragging;
         private bool m_Scrolling;
@@ -698,6 +711,28 @@ namespace UnityEngine.UI
                 else
                     Debug.Assert(!m_Vertical && m_Horizontal, this);
             }
+
+            //if (scrollCenter.enable)
+            //{
+            //    float spacing = contentSpacing;
+            //    //get item width
+            //    float itemWidth = GetSize(m_Content.GetChild(0) as RectTransform, true);
+
+            //    if(scrollCenter.time == ScrollCenter.Time.EndDrag)
+            //    {
+            //        eventList.onEndDrag.AddListener(() =>
+            //        {
+
+            //        });
+            //    }
+            //    else if(scrollCenter.time == ScrollCenter.Time.MoveStop)
+            //    {
+            //        eventList.onMoveStop.AddListener(() =>
+            //        {
+
+            //        });
+            //    }
+            //}
         }
         #endif
 
@@ -756,7 +791,7 @@ namespace UnityEngine.UI
             offset = -offset;
             return itemTypeEnd - idx - 1;
         }
-        
+
         public void ScrollToNext(float speed)
         {
             ScrollToCell(GetFirstItem(out float offset) + contentConstraintCount, speed);
@@ -1346,6 +1381,10 @@ namespace UnityEngine.UI
         {
             m_Velocity = Vector2.zero;
             eventList.onMoveStop?.Invoke();
+            if(scrollLock.enable && scrollLock.time == ScrollLock.Time.MoveStop)
+            {
+                ScrollToCell(GetFirstItem(out float offset) + scrollLock.cellOffset,scrollLock.speed);
+            }
         }
 
         public virtual void OnScroll(PointerEventData data)
@@ -1459,10 +1498,18 @@ namespace UnityEngine.UI
                 return;
 
             m_Dragging = false;
-            eventList.onDrag?.Invoke();
+            eventList.onEndDrag?.Invoke();
             if (!m_Inertia)
             {
                 eventList.onMoveStop?.Invoke();
+                if (scrollLock.enable && scrollLock.time == ScrollLock.Time.MoveStop)
+                {
+                    ScrollToCell(GetFirstItem(out float offset) + scrollLock.cellOffset, scrollLock.speed);
+                }
+            }
+            if (scrollLock.enable && scrollLock.time == ScrollLock.Time.EndDrag)
+            {
+                ScrollToCell(GetFirstItem(out float offset) + scrollLock.cellOffset, scrollLock.speed);
             }
         }
 
@@ -1578,6 +1625,10 @@ namespace UnityEngine.UI
                         if(m_Velocity == Vector2.zero)
                         {
                             eventList.onMoveStop?.Invoke();
+                            if (scrollLock.enable && scrollLock.time == ScrollLock.Time.MoveStop)
+                            {
+                                ScrollToCell(GetFirstItem(out float offset1) + scrollLock.cellOffset, scrollLock.speed);
+                            }
                         }
                     }
                     // If we have neither elaticity or friction, there shouldn't be any velocity.

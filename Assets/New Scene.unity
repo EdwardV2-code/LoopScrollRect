@@ -219,7 +219,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 3297154744292560595}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1068125014}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce71017a2903f7c4c9a699e438d0b897, type: 3}
@@ -327,6 +327,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1068125014 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3297154744424128574, guid: aabce7ad6500e6641915dabe6942c1d2,
+    type: 3}
+  m_PrefabInstance: {fileID: 3297154744292560595}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1068125018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068125014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0994c70d9ab94d469e4afcbf23feddf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rect: {fileID: 0}
+  upBorder: 0
+  downBorder: 0
 --- !u!1 &1231949175
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,8 +434,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 166309616}
         m_TargetAssemblyTypeName: UnityEngine.UI.LoopScrollRectBase, LoopScrollRect.Runtime
-        m_MethodName: ScrollToPrev
-        m_Mode: 4
+        m_MethodName: Test
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -625,6 +646,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297154744299930417, guid: aabce7ad6500e6641915dabe6942c1d2,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297154744424128547, guid: aabce7ad6500e6641915dabe6942c1d2,
+        type: 3}
+      propertyPath: reverseDirection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297154744424128547, guid: aabce7ad6500e6641915dabe6942c1d2,
+        type: 3}
+      propertyPath: scrollLock.speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297154744424128547, guid: aabce7ad6500e6641915dabe6942c1d2,
+        type: 3}
+      propertyPath: scrollLock.enable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3297154744424128547, guid: aabce7ad6500e6641915dabe6942c1d2,
+        type: 3}
+      propertyPath: scrollCenter.enable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3297154744424128573, guid: aabce7ad6500e6641915dabe6942c1d2,
         type: 3}

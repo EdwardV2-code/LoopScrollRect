@@ -6,6 +6,7 @@ public class ScrollIndexCallback1 : MonoBehaviour, LoopCell
 {
     public Image image;
 	public Text text;
+
     public static Color Rainbow(float progress)
     {
         progress = Mathf.Clamp01(progress);
@@ -52,7 +53,7 @@ public class ScrollIndexCallback1 : MonoBehaviour, LoopCell
         return new Color(r, g, b);
     }
 
-    public void ScrollCellIndex(int idx)
+    void LoopCell.ScrollCellIndex(int idx)
     {
         string name = "Cell " + idx.ToString();
         if (text != null)

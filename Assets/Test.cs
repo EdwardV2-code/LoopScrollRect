@@ -20,6 +20,8 @@ public class Test : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log($"upboard = {rect.transform.position.y + rect.GetComponent<RectTransform>().sizeDelta.y / 2 * rect.transform.localScale.y}");
+        Debug.Log($"downBoard = {rect.transform.position.y - rect.GetComponent<RectTransform>().sizeDelta.y / 2 * rect.transform.localScale.y}");
+        Debug.Log($"firstItem = {rect.GetFirstItem(out float offset)}");
     }
 }
